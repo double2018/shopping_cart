@@ -31,6 +31,20 @@ var goodsTable = new Vue({
           total += parseInt(this.goods[i].price * this.goods[i].default_nums);
       }
       return total;
+    },
+    addShoppingNum: function(){
+      var addShoppingNum = 0;
+      for(var i in this.goods){
+          addShoppingNum += this.goods[i].add_nums;
+      }
+      return addShoppingNum;
+    },
+    costPaid: function(){
+        var costPaid = 0;
+        for(var i in this.goods){
+          costPaid += parseInt(this.goods[i].price * this.goods[i].add_nums);
+      }
+      return costPaid;
     }
   },
   methods: {

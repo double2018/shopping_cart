@@ -48,7 +48,7 @@
 						<span>{{good.price*good.default_nums}}</span>
 					</td>
 					<td>
-						<button class="btn btn-sm" v-bind:class="good.ischange" v-on:click="addToCar(good)">加入购物车</button>
+						<button class="btn btn-sm" v-bind:class="good.default_nums == good.add_nums ? 'btn-success' : 'btn-danger'" v-on:click="addToCar(good)">加入购物车</button>
 						<span>已加入购物车的该商品数量:</span>
 						<span>{{good.add_nums}}</span>
 						<button class="btn btn-sm btn-danger" v-on:click="removeProduct(good,index)">删除</button>

@@ -10,15 +10,15 @@ var goodsTable = new Vue({
   	buyLists: [],
   	// 默认的商品列表
     goods: [
-      {name:'iphone 7 plus 手机',color:'银色',price:100,amount:0,default_nums:1,add_nums:0,ischange:'btn-danger'},
-	    {name:'华硕笔记本电脑',color:'黑色',price:100,amount:0,default_nums:1,add_nums:0,ischange:'btn-danger'},
-	    {name:'九阳电热水瓶5L',color:'白色',price:100,amount:0,default_nums:1,add_nums:0,ischange:'btn-danger'}
+      {name:'iphone 7 plus 手机',color:'银色',price:100,amount:0,default_nums:1,add_nums:0},
+	    {name:'华硕笔记本电脑',color:'黑色',price:100,amount:0,default_nums:1,add_nums:0},
+	    {name:'九阳电热水瓶5L',color:'白色',price:100,amount:0,default_nums:1,add_nums:0}
     ],
     //用于增加新商品到列表
-    newProduct: {name:'',color:'',price:0,amount:0,default_nums:1,add_nums:0,ischange:'btn-danger'}
+    newProduct: {name:'',color:'',price:0,amount:0,default_nums:1,add_nums:0,ischange:'btn-danger'},
   },  
   computed: {
-    count: function(){
+    count: function() {
       var num = 0;
       for(var i in this.goods){
           num += parseInt(this.goods[i].default_nums);
@@ -32,14 +32,14 @@ var goodsTable = new Vue({
       }
       return total;
     },
-    addShoppingNum: function(){
+    addShoppingNum: function() {
       var addShoppingNum = 0;
       for(var i in this.goods){
           addShoppingNum += this.goods[i].add_nums;
       }
       return addShoppingNum;
     },
-    costPaid: function(){
+    costPaid: function() {
         var costPaid = 0;
         for(var i in this.goods){
           costPaid += parseInt(this.goods[i].price * this.goods[i].add_nums);
@@ -51,17 +51,19 @@ var goodsTable = new Vue({
     reduce: function(good) {
       if (good.default_nums <= 1) return;
       good.default_nums --;
-      good.ischange = 'btn-danger';
+      //good.ischange = 'btn-danger';
     },
     addNum: function(good) {
       good.default_nums += 1;
-      good.ischange = 'btn-danger';
+      //good.ischange = 'btn-danger';
     },
     addProduct: function() {
       //var len = this.goods.length;
       //追加商品
-      //this.goods.push(Object.assign({},this.goods[len-1]));
-      this.goods.push(Object.assign({}, this.newProduct));
+      //this.goods.push(Object.assign({},this.goods[len-1]));//浅拷贝
+      //this.goods.push(Object.assign({}, this.newProduct));//浅拷贝
+      var obj = JSON.stringify(this.newProduct);
+      this.goods.push(JSON.parse(obj));//深拷贝
     },
     removeProduct: function(good,index) {
       //删除商品
@@ -70,7 +72,7 @@ var goodsTable = new Vue({
   	addToCar(good) {
   		if(good.add_nums == good.default_nums) return;
   		good.add_nums = good.default_nums;
-      good.ischange = 'btn-success';
+      //good.ischange = 'btn-success';
       this.goodItem = {name: good.name, nums: good.add_nums};
       // 创建用户当前添加的商品对象
   		// 开始向数组中提添加当前物品，这里存在3种情况

@@ -2,12 +2,22 @@
 //var newProduct = {name:'',color:'',price:0,amount:0,default_nums:1,add_nums:0,ischange:'btn-danger'};
 // 商品列表json
 var goodsTable = new Vue({
-  el: '#goods-table',
+  el: '.content',
   data: {
     // 用于保存每件商品的对象
     goodItem: {},
   	// 用于保存用户添加到购车的商品数组
   	buyLists: [],
+    //要删除的索引
+    nowIndex: -100,
+    //消息
+    msg: "",
+    //要从数组中移除的商品名
+    nm: "",
+    //是否结算
+    suc: false,
+    //
+    isAdd: true,
   	// 默认的商品列表
     goods: [
       {name:'iphone 7 plus 手机',color:'银色',price:100,amount:0,default_nums:1,add_nums:0},
@@ -53,21 +63,31 @@ var goodsTable = new Vue({
       good.default_nums --;
       //good.ischange = 'btn-danger';
     },
-    addNum: function(good) {
+    /*addNum: function(good) {
       good.default_nums += 1;
       //good.ischange = 'btn-danger';
-    },
+    },*/
     addProduct: function() {
       //var len = this.goods.length;
       //追加商品
       //this.goods.push(Object.assign({},this.goods[len-1]));//浅拷贝
       //this.goods.push(Object.assign({}, this.newProduct));//浅拷贝
-      var obj = JSON.stringify(this.newProduct);
-      this.goods.push(JSON.parse(obj));//深拷贝
+      this.goods.push(JSON.parse(JSON.stringify(this.newProduct)));//深拷贝
     },
-    removeProduct: function(good,index) {
+    removeProduct: function(index,nm) {
       //删除商品
-      this.goods.splice(index,1);
+      if(index == -2){
+        this.goods = [];
+        this.buyLists = [];
+      }else{
+        this.goods.splice(index,1);
+        //删除buyLists中的商品
+        for(var i=this.buyLists.length-1; i>=0; i--){
+          if(this.buyLists[i].name == nm){
+              this.buyLists.splice(i,1);
+          }
+        }
+      }
     },
   	addToCar(good) {
   		if(good.add_nums == good.default_nums) return;
@@ -84,10 +104,47 @@ var goodsTable = new Vue({
       });
       //Object.assign() 方法用于将所有可枚举属性的值从一个或多个源对象复制到目标对象。它将返回目标对象。
       index === -1 ? this.buyLists.push(this.goodItem) : Object.assign(this.buyLists[index], this.goodItem);
-    }, 
+    },
     balance() {
-      console.log(this.buyLists);
-    }
+      if(this.suc){
+
+          console.log(this.buyLists);
+          if(this.buyLists.length != 0){
+            this.msg = '结算成功！';
+            console.log("结算成功！");
+          }else{
+            this.msg = '购物车还没有加入商品,请先加入到购物车！';
+            console.log("购物车还没有加入商品,请先加入到购物车！");
+          }
+      }
+    },
+    showFunction(n) {//$ref 操作DOM
+      if(n == '0'){
+        for(var i in this.goods){
+          if(this.goods[i].default_nums == this.goods[i].add_nums){
+              this.$refs.good[i].style.display = "none";
+          }else{
+            this.$refs.good[i].style.display = "";
+          }
+        }
+      }else if(n=='all'){
+        for(var i in this.goods){
+            this.$refs.good[i].style.display = "";
+          }
+      }else if(n == '1'){
+        for(var i in this.goods){
+          if(this.goods[i].default_nums == this.goods[i].add_nums){
+              this.$refs.good[i].style.display = "";
+          }else{
+            this.$refs.good[i].style.display = "none";
+          }
+        }
+      }
+   }
+  },
+  updated(){//数据更新完成后
+      //this.$refs.good[0].style.display == "none";
+      console.log(this.$refs.good);
+      console.log(this.$el);
   }
 })
-

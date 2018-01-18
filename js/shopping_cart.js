@@ -16,8 +16,7 @@ var goodsTable = new Vue({
     nm: "",
     //是否结算
     suc: false,
-    //
-    isAdd: true,
+    //isAdd: true,
   	// 默认的商品列表
     goods: [
       {name:'iphone 7 plus 手机',color:'银色',price:100,amount:0,default_nums:1,add_nums:0},
@@ -25,7 +24,7 @@ var goodsTable = new Vue({
 	    {name:'九阳电热水瓶5L',color:'白色',price:100,amount:0,default_nums:1,add_nums:0}
     ],
     //用于增加新商品到列表
-    newProduct: {name:'',color:'',price:0,amount:0,default_nums:1,add_nums:0,ischange:'btn-danger'},
+    newProduct: {name:'',color:'',price:0,amount:0,default_nums:1,add_nums:0},
   },  
   computed: {
     count: function() {
@@ -121,7 +120,7 @@ var goodsTable = new Vue({
     showFunction(n) {//$ref 操作DOM
       if(n == '0'){
         for(var i in this.goods){
-          if(this.goods[i].default_nums == this.goods[i].add_nums){
+          if(this.goods[i].add_nums != 0){
               this.$refs.good[i].style.display = "none";
           }else{
             this.$refs.good[i].style.display = "";
@@ -133,7 +132,7 @@ var goodsTable = new Vue({
           }
       }else if(n == '1'){
         for(var i in this.goods){
-          if(this.goods[i].default_nums == this.goods[i].add_nums){
+          if(this.goods[i].add_nums != 0){
               this.$refs.good[i].style.display = "";
           }else{
             this.$refs.good[i].style.display = "none";

@@ -70,7 +70,7 @@
 				</tr>
 				<tr>
 					<td colspan="6">
-						<span class="modal-title">{{msg}}</span>
+						<span class="modal-title" v-text="msg"></span>
 						<span v-show="msg==''">合计数量{{count}}件</span>
 						<span v-show="msg==''">合计金额{{total}}元</span>
 						<b v-show="msg!='已加入' && msg!='未加入' && msg!='结算成功！'">||</b>

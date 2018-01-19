@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh-en">
+<head>
+	<title>添加购物车商品列表</title>
+	<meta charset="utf-8" />
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+	<style type="text/css">
+		[v-cloak]{ /*防止页面闪烁*/
+			display: none !important;
+		}
+		.content{
+			width: 1000px;
+			margin: 100px auto;
+		}
+		.sWidth{
+			width:50px;
+			height:20px;
+		}
+		.hide{
+			display: none;
+		}
+	</style>
+</head>
+<body>
+
+	<div class="content">
+		<!-- 商品列表 -->
+		<table class="table table-bordered" id="goods-table" v-cloak>
+			<thead>
+				<th>序号</th>
+				<th>商品名称</th>
+				<th>颜色</th>
+				<th>数量</th>
+				<th>单价</th>
+				<th>金额</th>
+				<th>操作</th>
+			</thead>
+			<tbody>
+				<tr v-for="(good, $index) in goods" ref="good">
+					<td>{{ $index+1 }}</td>
+					<td><input v-model.lazy="good.name"></td>
+					<td><input v-model.lazy="good.color" class="sWidth"></td>
+					<td>
+						<button v-on:click="reduce(good)">-</button>
+						<input type="text" type="number"  v-model.number="good.default_nums"/>
+						<button v-on:click="good.default_nums += 1">+</button>
+					</td>
+					<td>
+						<input class="sWidth" v-model.number="good.price"></span>
+					</td>
+					<td>
+						<span>{{good.price*good.default_nums}}</span>
+					</td>
+					<td>
+						<button class="btn btn-sm" v-bind:class="good.default_nums == good.add_nums ? 'btn-success' : 'btn-danger'" v-on:click="addToCar(good)">加入购物车</button>
+						<span>已加入购物车的该商品数量:</span>
+						<span>{{good.add_nums}}</span>
+						<button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#layer" v-on:click="nowIndex=$index,msg='确认删除吗?',nm=good.name">删除</button>
+					</td>
+				</tr>
+			</tbody>
+			<tfoot>
+				<tr>
+					<td colspan="7">
+						<button class="btn btn-danger" v-on:click="addProduct()">添加商品</button>
+						
+						<button class="btn btn-sm btn-danger pull-right" data-toggle="modal" data-target="#layer" v-on:click="nowIndex=-2,msg='确认全部删除吗?'">全部删除</button>
+					</td>
+					
+				</tr>
+				<tr>
+					<td colspan="6">
+						<span class="modal-title" v-text="msg"></span>
+						<span v-show="msg==''">合计数量{{count}}件</span>
+						<span v-show="msg==''">合计金额{{total}}元</span>
+						<b v-show="msg!='已加入' && msg!='未加入' && msg!='结算成功！'">||</b>
+						<span v-show="msg=='未加入'">购物车{{count - addShoppingNum}}件</span>
+						<span v-show="msg!='未加入'">购物车{{addShoppingNum}}件</span>
+						<span v-show="msg!='未加入'">花费{{costPaid}}元</span>
+					</td>
+					<td colspan="1">
+						<button class="btn btn-danger pull-left" v-on:click="msg='',showFunction('all')">全部</button>
+						<button class="btn btn-danger pull-left" v-on:click="msg='已加入',showFunction('1')">已加入</button>
+						<button class="btn btn-danger pull-left" v-on:click="msg='未加入',showFunction('0')">未加入</button>
+						<button class="btn btn-danger pull-right" data-toggle="modal" data-target="#layer" v-on:click="suc=true,msg='是否结算?'">结算</button>
+					</td>
+				</tr>
+			</tfoot>
+		</table>
+		
+		<!--模态框 弹出框-->
+        <div role="dialog" class="modal fade bs-example-modal-sm" id="layer">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">
+                            <span>&times;</span>
+                        </button>
+                        <h4 class="modal-title">{{msg}}</h4>
+                    </div>
+                    <div class="modal-body text-right">
+                        <button data-dismiss="modal" class="btn btn-default btn-sm" v-on:click="suc=false,msg=''">取消</button>
+                        <button data-dismiss="modal" class="btn btn-danger btn-sm" v-on:click="removeProduct(nowIndex,nm),msg=''" v-if="!suc">确认</button>
+                        <button data-dismiss="modal" class="btn btn-danger btn-sm" v-on:click="balance()" v-else>结算</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+	</div>
+	<!-- js -->
+	<script type="text/javascript" src="js/vue.js"></script>
+	<script type="text/javascript" src="js/shopping_cart.js"></script>
+	<script src="js/jquery-1.8.1.min.js"></script>
+	<script src="js/bootstrap.js"></script>
+</body>
+</html>

@@ -8,4 +8,5 @@
 3.增减商品数量(methods)
 4.绑定button class背景，根据商品是否已经加入到购物车，动态显示button背景（就是v-bind:class的实际应用）。
 5.删除单列商品(object.splice(index,1))
-6.添加商品到商品列(对象浅拷贝用到的是object.assign({},obj),深拷贝var obj = JSON.stringify(this.newProduct);this.goods.push(JSON.parse(obj));//深拷贝)
+6.添加商品到商品列(对象浅拷贝或者一层深拷贝用到的是object.assign({},obj),深拷贝var obj = JSON.stringify(this.newProduct);this.goods.push(JSON.parse(obj));//深拷贝)
+7.增加分类查询功能，已加入、未加入、全部;用到的是Vue 通过$ref直接对DOM操作

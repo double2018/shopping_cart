@@ -27,13 +27,15 @@
 		<!-- 商品列表 -->
 		<table class="table table-bordered" id="goods-table" v-cloak>
 			<thead>
-				<th>序号</th>
-				<th>商品名称</th>
-				<th>颜色</th>
-				<th>数量</th>
-				<th>单价</th>
-				<th>金额</th>
-				<th>操作</th>
+				<tr>
+					<th>序号</th>
+					<th>商品名称</th>
+					<th>颜色</th>
+					<th>数量</th>
+					<th>单价</th>
+					<th>金额</th>
+					<th>操作</th>
+				</tr>
 			</thead>
 			<tbody>
 				<tr v-for="(good, $index) in goods" ref="good">
@@ -46,7 +48,7 @@
 						<button @click="good.default_nums += 1">+</button>
 					</td>
 					<td>
-						<input class="sWidth" v-model.number="good.price"></span>
+						<input class="sWidth" v-model.number="good.price">
 					</td>
 					<td>
 						<span>{{good.price*good.default_nums}}</span>

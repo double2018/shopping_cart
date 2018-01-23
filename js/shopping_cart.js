@@ -27,28 +27,28 @@ var goodsTable = new Vue({
     newProduct: {name:'',color:'',price:0,amount:0,default_nums:1,add_nums:0},
   },  
   computed: {
-    count() {
+    count: function() {
       var num = 0;
       for(var i in this.goods){
           num += parseInt(this.goods[i].default_nums);
       }
       return num;
     },
-    total() {
-      var total = 0;
+    total: function() {
+      var totals = 0;
       for(var i in this.goods){
-          total += parseInt(this.goods[i].price * this.goods[i].default_nums);
+          totals += parseInt(this.goods[i].price * this.goods[i].default_nums);
       }
-      return total;
+      return totals;
     },
-    addShoppingNum() {
+    addShoppingNum: function() {
       var addShoppingNum = 0;
       for(var i in this.goods){
           addShoppingNum += this.goods[i].add_nums;
       }
       return addShoppingNum;
     },
-    costPaid() {
+    costPaid: function() {
         var costPaid = 0;
         for(var i in this.goods){
           costPaid += parseInt(this.goods[i].price * this.goods[i].add_nums);
@@ -57,7 +57,7 @@ var goodsTable = new Vue({
     }
   },
   methods: {
-    reduce(good) {
+    reduce: function(good) {
       if (good.default_nums <= 1) return;
       good.default_nums --;
       //good.ischange = 'btn-danger';
@@ -66,14 +66,14 @@ var goodsTable = new Vue({
       good.default_nums += 1;
       //good.ischange = 'btn-danger';
     },*/
-    addProduct() {
+    addProduct: function() {
       //var len = this.goods.length;
       //追加商品
       //this.goods.push(Object.assign({},this.goods[len-1]));//浅拷贝
       //this.goods.push(Object.assign({}, this.newProduct));//浅拷贝
       this.goods.push(JSON.parse(JSON.stringify(this.newProduct)));//深拷贝
     },
-    removeProduct(index,nm) {
+    removeProduct: function(index,nm) {
       //删除商品
       if(index == -2){
         this.goods = [];
@@ -88,7 +88,7 @@ var goodsTable = new Vue({
         }
       }
     },
-  	addToCar(good) {
+  	addToCar: function(good) {
   		if(good.add_nums == good.default_nums) return;
   		good.add_nums = good.default_nums;
       //good.ischange = 'btn-success';
@@ -98,13 +98,13 @@ var goodsTable = new Vue({
       // 1、用户未添加过该商品，则直接向数组中push
       // 2、用于已经添加了该商品、并且未做购买数量修改，则不向数组中添加
       // 3、用于已经添加了该商品、但是修改了购买数量，直接替换数组中的该商品对象
-      var index = this.buyLists.findIndex((value, index, arr) => {
+      var index = this.buyLists.findIndex(function(value, index, arr) {
          return value.name === this.goodItem.name;
       });
       //Object.assign() 方法用于将所有可枚举属性的值从一个或多个源对象复制到目标对象。它将返回目标对象。
       index === -1 ? this.buyLists.push(this.goodItem) : Object.assign(this.buyLists[index], this.goodItem);
     },
-    balance() {
+    balance: function() {
       if(this.suc){
 
           console.log(this.buyLists);
@@ -117,7 +117,7 @@ var goodsTable = new Vue({
           }
       }
     },
-    showFunction(n) {//$ref 操作DOM
+    showFunction: function(n) {//$ref 操作DOM
       if(n == '0'){
         for(var i in this.goods){
           if(this.goods[i].add_nums != 0){
@@ -141,7 +141,7 @@ var goodsTable = new Vue({
       }
    }
   },
-  updated(){//数据更新完成后
+  updated: function(){//数据更新完成后
       //this.$refs.good[0].style.display == "none";
       console.log(this.$refs.good);
       console.log(this.$el);

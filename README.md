@@ -11,5 +11,5 @@
 6.删除单列商品,删除全部商品(object.splice(index,1)) 
 7.删除结算时增加动态模态框特效
 7.增加分类查询功能，已加入、未加入、全部;用到的是Vue 通过$ref直接对DOM操作
-
+8.对IE9+支持，去掉ES6的箭头函数
 浏览demo地址：https://double2018.github.io/shopping_cart/shopping_cart.html

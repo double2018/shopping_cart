@@ -27,28 +27,28 @@ var goodsTable = new Vue({
     newProduct: {name:'',color:'',price:0,amount:0,default_nums:1,add_nums:0},
   },  
   computed: {
-    count: function() {
+    count() {
       var num = 0;
       for(var i in this.goods){
           num += parseInt(this.goods[i].default_nums);
       }
       return num;
     },
-    total: function() {
+    total() {
       var total = 0;
       for(var i in this.goods){
           total += parseInt(this.goods[i].price * this.goods[i].default_nums);
       }
       return total;
     },
-    addShoppingNum: function() {
+    addShoppingNum() {
       var addShoppingNum = 0;
       for(var i in this.goods){
           addShoppingNum += this.goods[i].add_nums;
       }
       return addShoppingNum;
     },
-    costPaid: function() {
+    costPaid() {
         var costPaid = 0;
         for(var i in this.goods){
           costPaid += parseInt(this.goods[i].price * this.goods[i].add_nums);
@@ -57,7 +57,7 @@ var goodsTable = new Vue({
     }
   },
   methods: {
-    reduce: function(good) {
+    reduce(good) {
       if (good.default_nums <= 1) return;
       good.default_nums --;
       //good.ischange = 'btn-danger';
@@ -66,14 +66,14 @@ var goodsTable = new Vue({
       good.default_nums += 1;
       //good.ischange = 'btn-danger';
     },*/
-    addProduct: function() {
+    addProduct() {
       //var len = this.goods.length;
       //追加商品
       //this.goods.push(Object.assign({},this.goods[len-1]));//浅拷贝
       //this.goods.push(Object.assign({}, this.newProduct));//浅拷贝
       this.goods.push(JSON.parse(JSON.stringify(this.newProduct)));//深拷贝
     },
-    removeProduct: function(index,nm) {
+    removeProduct(index,nm) {
       //删除商品
       if(index == -2){
         this.goods = [];

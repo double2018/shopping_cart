@@ -859,7 +859,7 @@ if (typeof jQuery === "undefined") { throw new Error("Bootstrap requires jQuery"
   var Modal = function (element, options) {
     this.options   = options
     this.$element  = $(element)
-    this.$backdrop =
+    this.$backdrop = 'static'
     this.isShown   = null
 
     if (this.options.remote) this.$element.load(this.options.remote)

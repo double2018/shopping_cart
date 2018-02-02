@@ -123,9 +123,11 @@ var goodsTable = new Vue({
       // 1、用户未添加过该商品，则直接向数组中push
       // 2、用于已经添加了该商品、并且未做购买数量修改，则不向数组中添加
       // 3、用于已经添加了该商品、但是修改了购买数量，直接替换数组中的该商品对象
-      var index = this.buyLists.findIndex((value, index, arr) => { //ES6对数组扩展查找方法
+      /*var index = this.buyLists.findIndex((value, index, arr) => { //ES6对数组扩展查找方法
          return value.name == this.goodItem.name;
-      });
+      });*/
+      //IE不支持ES6箭头函数
+      var index = this.buyLists.indexOf(this.goodItem.name);
       //Object.assign() 方法用于将所有可枚举属性的值从一个或多个源对象复制到目标对象。它将返回目标对象。
       index === -1 ? this.buyLists.push(this.goodItem) : Object.assign(this.buyLists[index], this.goodItem);
     },

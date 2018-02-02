@@ -38,7 +38,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr v-for="(good, $index) in goods" ref="good">
+				<tr v-for="(good, $index) in shoppingListFilter" ref="good">
 					<td>{{ $index+1 }}</td>
 					<td><input v-model.lazy="good.name"></td>
 					<td><input v-model.lazy="good.color" class="sWidth"></td>
@@ -81,9 +81,9 @@
 						<span v-show="msg!='未加入'">花费{{costPaid}}元</span>
 					</td>
 					<td colspan="1">
-						<button class="btn btn-danger pull-left" @click="msg='',showFunction('all')">全部</button>
-						<button class="btn btn-danger pull-left" @click="msg='已加入',showFunction('1')">已加入</button>
-						<button class="btn btn-danger pull-left" @click="msg='未加入',showFunction('0')">未加入</button>
+						<button class="btn btn-danger pull-left" @click="msg='',fButton=msg">全部</button>
+						<button class="btn btn-danger pull-left" @click="msg='已加入',fButton=msg">已加入</button>
+						<button class="btn btn-danger pull-left" @click="msg='未加入',fButton=msg">未加入</button>
 						<button class="btn btn-danger pull-right" data-toggle="modal" data-target="#layer" @click="suc=true,msg='是否结算?'">结算</button>
 					</td>
 				</tr>
